@@ -1,0 +1,64 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: socialauto-db
+    env: docker
+    region: frankfurt
+    plan: free
+    databaseName: socialauto
+    databaseUser: socialauto_user
+    ipAllowList: []
+
+  # Backend Web Service
+  - type: web
+    name: socialauto-backend
+    env: node
+    region: frankfurt
+    plan: free
+    repo: https://github.com/CJ-aezakmi/jarveee
+    branch: main
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: socialauto-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: API_PREFIX
+        value: api/v1
+      - key: FRONTEND_URL
+        value: https://socialauto-frontend.onrender.com
+      - key: REDIS_HOST
+        value: localhost
+      - key: REDIS_PORT
+        value: 6379
+    healthCheckPath: /api/v1
+
+  # Frontend Static Site
+  - type: web
+    name: socialauto-frontend
+    env: static
+    region: frankfurt
+    plan: free
+    repo: https://github.com/CJ-aezakmi/jarveee
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://socialauto-backend.onrender.com/api/v1
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff

@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BullModule } from '@nestjs/bull';
-import { ScheduleModule } from '@nestjs/schedule';
+// import { BullModule } from '@nestjs/bull';
+// import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { CampaignsModule } from './modules/campaigns/campaigns.module';
-import { TasksModule } from './modules/tasks/tasks.module';
+// import { TasksModule } from './modules/tasks/tasks.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { SubscriptionsModule } from './modules/subscriptions/subscriptions.module';
-import { ProxyModule } from './modules/proxy/proxy.module';
-import { AutomationModule } from './modules/automation/automation.module';
+// import { ProxyModule } from './modules/proxy/proxy.module';
+// import { AutomationModule } from './modules/automation/automation.module';
 
 @Module({
   imports: [
@@ -38,32 +38,32 @@ import { AutomationModule } from './modules/automation/automation.module';
       inject: [ConfigService],
     }),
 
-    // Redis & Bull Queue
-    BullModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        redis: {
-          host: configService.get('REDIS_HOST'),
-          port: +configService.get('REDIS_PORT'),
-          password: configService.get('REDIS_PASSWORD') || undefined,
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    // Redis & Bull Queue (temporarily disabled)
+    // BullModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (configService: ConfigService) => ({
+    //     redis: {
+    //       host: configService.get('REDIS_HOST'),
+    //       port: +configService.get('REDIS_PORT'),
+    //       password: configService.get('REDIS_PASSWORD') || undefined,
+    //     },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
 
-    // Schedule (for cron jobs)
-    ScheduleModule.forRoot(),
+    // Schedule (for cron jobs) - temporarily disabled
+    // ScheduleModule.forRoot(),
 
     // Feature modules
     AuthModule,
     UsersModule,
     AccountsModule,
     CampaignsModule,
-    TasksModule,
+    // TasksModule,  // disabled - requires Bull
     AnalyticsModule,
     SubscriptionsModule,
-    ProxyModule,
-    AutomationModule,
+    // ProxyModule,  // disabled
+    // AutomationModule,  // disabled - requires Puppeteer
   ],
 })
 export class AppModule {}

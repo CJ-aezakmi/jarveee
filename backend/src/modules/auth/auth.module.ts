@@ -9,7 +9,7 @@ import { User } from '../users/entities/user.entity';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
-import { GoogleStrategy } from './strategies/google.strategy';
+// import { GoogleStrategy } from './strategies/google.strategy'; // disabled - requires passport-google-oauth20
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { GoogleStrategy } from './strategies/google.strategy';
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, LocalStrategy, GoogleStrategy],
+  providers: [AuthService, JwtStrategy, LocalStrategy], // GoogleStrategy disabled
   exports: [AuthService],
 })
 export class AuthModule {}

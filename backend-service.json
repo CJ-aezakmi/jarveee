@@ -1,0 +1,28 @@
+{
+  "type": "web_service",
+  "ownerId": "tea-d5iur4adbo4c73ee2ncg",
+  "name": "socialauto-backend",
+  "repo": "https://github.com/CJ-aezakmi/jarveee",
+  "autoDeploy": true,
+  "branch": "main",
+  "rootDir": "backend",
+  "region": "frankfurt",
+  "plan": "free",
+  "serviceDetails": {
+    "env": "node",
+    "envSpecificDetails": {
+      "buildCommand": "npm install && npm run build",
+      "startCommand": "npm run start:prod"
+    }
+  },
+  "envVars": [
+    {"key": "NODE_ENV", "value": "production"},
+    {"key": "PORT", "value": "10000"},
+    {"key": "DATABASE_URL", "value": "postgresql://socialauto_db_user:QJpC9oioNi7vrBseEQpPtKvQNAZSmX4f@dpg-d5iusd7pm1nc73fi2mi0-a/socialauto_db"},
+    {"key": "JWT_SECRET", "value": "super-secret-jwt-key-32-chars-random-string-2026"},
+    {"key": "API_PREFIX", "value": "api/v1"},
+    {"key": "FRONTEND_URL", "value": "https://socialauto-frontend.onrender.com"},
+    {"key": "REDIS_HOST", "value": "localhost"},
+    {"key": "REDIS_PORT", "value": "6379"}
+  ]
+}

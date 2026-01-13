@@ -1,0 +1,10 @@
+nixpacks.provider = "nodejs"
+
+[phases.setup]
+nixPkgs = ["nodejs", "npm"]
+
+[phases.build]
+cmds = ["npm install", "npm run build"]
+
+[phases.start]
+cmd = "npm run start:prod"
